@@ -53,42 +53,42 @@ describe('history.pushState / history.replaceState', () => {
       window.history.pushState({ foo: 'bar' }, 'test page', 'myPage.html')
 
       expect(emitter.emit).to.have.been.calledOnce
-      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://localhost:8080/test/myPage.html' })
+      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://localhost:8080/test/myPage.html', type: 'HISTORY_PUSHSTATE' })
     })
 
     it('should emit onLinkFollowed event for history.replaceState', () => {
       window.history.replaceState({ foo: 'bar' }, 'test page', 'myPage.html')
 
       expect(emitter.emit).to.have.been.calledOnce
-      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://localhost:8080/test/myPage.html' })
+      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://localhost:8080/test/myPage.html', type: 'HISTORY_REPLACESTATE' })
     })
 
     it('should emit onLinkFollowed event for history.pushState without a file extension', () => {
       window.history.pushState({ foo: 'bar' }, 'test page', '/user/12345')
 
       expect(emitter.emit).to.have.been.calledOnce
-      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://localhost:8080/user/12345' })
+      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://localhost:8080/user/12345', type: 'HISTORY_PUSHSTATE' })
     })
 
     it('should emit onLinkFollowed event for history.replaceState without a file extension', () => {
       window.history.replaceState({ foo: 'bar' }, 'test page', '/user/12345')
 
       expect(emitter.emit).to.have.been.calledOnce
-      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://localhost:8080/user/12345' })
+      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://localhost:8080/user/12345', type: 'HISTORY_REPLACESTATE' })
     })
 
     it('should emit onLinkFollowed event for history.pushState if the url is absolute', () => {
       window.history.pushState({ foo: 'bar' }, 'test page', 'http://localhost:8080/hello/world')
 
       expect(emitter.emit).to.have.been.calledOnce
-      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://localhost:8080/hello/world' })
+      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://localhost:8080/hello/world', type: 'HISTORY_PUSHSTATE' })
     })
 
     it('should emit onLinkFollowed event for history.replaceState if the url is absolute', () => {
       window.history.replaceState({ foo: 'bar' }, 'test page', 'http://localhost:8080/hello/world')
 
       expect(emitter.emit).to.have.been.calledOnce
-      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://localhost:8080/hello/world' })
+      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://localhost:8080/hello/world', type: 'HISTORY_REPLACESTATE' })
     })
 
     it('should not emit an event for history.pushState if the url is not on the same domain', () => {

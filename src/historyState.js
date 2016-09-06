@@ -1,4 +1,7 @@
-const wrapped = (win, emitter, method) => (state, title, url) => {
+const HISTORY_PUSHSTATE = 'HISTORY_PUSHSTATE'
+const HISTORY_REPLACESTATE = 'HISTORY_REPLACESTATE'
+
+const wrapped = (win, emitter, method, type) => (state, title, url) => {
   try {
     method.call(win.history, state, title, url)
   } catch (err) {
@@ -8,15 +11,15 @@ const wrapped = (win, emitter, method) => (state, title, url) => {
     throw err
   }
 
-  emitter.emit('onLinkFollowed', { destination: window.location.href })
+  emitter.emit('onLinkFollowed', { destination: window.location.href, type })
 }
 
 export const attach = (win, rootNode, emitter) => {
   win._emmerich_olf.historyPushState = win.history.pushState
   win._emmerich_olf.historyReplaceState = win.history.replaceState
 
-  win.history.pushState = wrapped(win, emitter, win._emmerich_olf.historyPushState)
-  win.history.replaceState = wrapped(win, emitter, win._emmerich_olf.historyReplaceState)
+  win.history.pushState = wrapped(win, emitter, win._emmerich_olf.historyPushState, HISTORY_PUSHSTATE)
+  win.history.replaceState = wrapped(win, emitter, win._emmerich_olf.historyReplaceState, HISTORY_REPLACESTATE)
 }
 
 export const detach = (win, rootNode) => {

@@ -31,14 +31,14 @@ describe('window.open', () => {
       window.open('http://www.google.com')
 
       expect(emitter.emit).to.have.been.calledOnce
-      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://www.google.com' })
+      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://www.google.com', type: 'WINDOW_OPEN' })
     })
 
     it('should emit onLinkFollowed event with the destination if the target is _blank', () => {
       window.open('http://www.google.com', '_blank')
 
       expect(emitter.emit).to.have.been.calledOnce
-      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://www.google.com' })
+      expect(emitter.emit).to.have.been.calledWithExactly('onLinkFollowed', { destination: 'http://www.google.com', type: 'WINDOW_OPEN' })
     })
   })
 })

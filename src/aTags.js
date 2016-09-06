@@ -1,12 +1,17 @@
+const A_TAG = 'A_TAG'
 const RIGHT_CLICK = 2
-const listeners = {
-  'click': null,
-  'mousedown': null
-}
 
 const getLinkFollowedPacket = (ev) => {
+  // ev.target references the element that was clicked, but ev.currentTarget
+  // references the element that we attached the event handler to, so we know
+  // its an a tag
   return {
-    destination: ev.target.href
+    destination: ev.currentTarget.href,
+    type: A_TAG,
+    params: {
+      element: ev.currentTarget,
+      target: ev.target
+    }
   }
 }
 
@@ -29,21 +34,26 @@ const forEachATag = (rootNode, fn) => {
 }
 
 export const attach = (win, rootNode, emitter) => {
-  forEachATag(rootNode, (a) => {
-    listeners.click = onClick(emitter)
-    listeners.mousedown = onMouseDown(emitter)
+  win._emmerich_olf._aTagListeners = []
 
-    a.addEventListener('click', listeners.click)
-    a.addEventListener('mousedown', listeners.mousedown)
+  forEachATag(rootNode, (a) => {
+    const clickListener = onClick(emitter)
+    const mdListener = onMouseDown(emitter)
+
+    win._emmerich_olf._aTagListeners.push([a, [
+      ['click', clickListener], ['mousedown', mdListener]]])
+
+    a.addEventListener('click', clickListener)
+    a.addEventListener('mousedown', mdListener)
   })
 }
 
 export const detach = (win, rootNode) => {
-  forEachATag(rootNode, (a) => {
-    a.removeEventListener('click', listeners.click)
-    a.removeEventListener('mousedown', listeners.mousedown)
-
-    listeners.click = null
-    listeners.mousedown = null
+  win._emmerich_olf._aTagListeners.forEach(([node, listeners]) => {
+    listeners.forEach(([name, handler]) => {
+      node.removeEventListener(name, handler)
+    })
   })
+
+  win._emmerich_olf._aTagListeners = []
 }

@@ -1,5 +1,7 @@
+const WINDOW_OPEN = 'WINDOW_OPEN'
+
 const wrappedWindowOpen = (win, emitter) => (url, target, args) => {
-  emitter.emit('onLinkFollowed', { destination: url })
+  emitter.emit('onLinkFollowed', { destination: url, type: WINDOW_OPEN })
   win._emmerich_olf.winOpen.call(win, url, target, args)
 }
 

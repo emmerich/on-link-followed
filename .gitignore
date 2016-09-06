@@ -26,7 +26,6 @@ node_modules
 bower_components
 coverage
 testServer
-dist
 
 # Users Environment Variables
 .lock-wscript
