@@ -8,3 +8,9 @@ Detects when links are followed in the browser.
 [![Dependency Status](https://david-dm.org/emmerich/on-link-followed.svg)](https://david-dm.org/emmerich/on-link-followed)
 [![devDependency Status](https://david-dm.org/emmerich/on-link-followed/dev-status.svg)](https://david-dm.org/emmerich/on-link-followed#info=devDependencies)
 # on-link-followed
+
+## Development
+To run the unit tests: npm run tests
+To run in the browser npm run test-browser and then open runner.html in the browser
+
+## Changing the Browser Location

@@ -1,0 +1,14 @@
+{
+  "globals": {
+    "expect": true,
+    "assert": true,
+    "mock": true,
+    "sandbox": true,
+    "spy": true,
+    "stub": true,
+    "useFakeServer": true,
+    "useFakeTimers": true,
+    "useFakeXMLHttpRequest": true,
+    "_emmerich_olf": true
+  }
+}
