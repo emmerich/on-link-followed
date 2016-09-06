@@ -17,7 +17,6 @@ plugin aims to normalize all of those methods into one `onLinkFollowed` event.
   * Left-click
   * Middle-click
   * Right-click (sends an onMaybeLinkFollowed because the user is not obligated to click open)
-
 * window.open
 * window.history.pushState
 * window.history.replaceState
