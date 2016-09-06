@@ -79,37 +79,8 @@ function build() {
     .pipe(gulp.dest(destinationFolder));
 }
 
-function _mocha() {
-  return gulp.src(['test/setup/node.js', 'test/unit/**/*.js'], {read: false})
-    .pipe($.mocha({
-      reporter: 'dot',
-      globals: Object.keys(mochaGlobals.globals),
-      ignoreLeaks: false
-    }));
-}
-
 function _registerBabel() {
   require('babel-register');
-}
-
-function test() {
-  _registerBabel();
-  return _mocha();
-}
-
-function coverage(done) {
-  _registerBabel();
-  gulp.src(['src/**/*.js'])
-    .pipe($.istanbul({
-      instrumenter: Instrumenter,
-      includeUntested: true
-    }))
-    .pipe($.istanbul.hookRequire())
-    .on('finish', () => {
-      return test()
-        .pipe($.istanbul.writeReports())
-        .on('end', done);
-    });
 }
 
 const watchFiles = ['src/**/*', 'test/**/*', 'package.json', '**/.eslintrc'];
@@ -195,12 +166,6 @@ gulp.task('lint', ['lint-src', 'lint-test', 'lint-gulpfile']);
 // Build two versions of the library
 gulp.task('build', ['lint', 'clean'], build);
 
-// Lint and run our tests
-gulp.task('test', ['lint'], test);
-
-// Set up coverage and run tests
-gulp.task('coverage', ['lint'], coverage);
-
 // Set up a livereload environment for our spec runner `test/runner.html`
 gulp.task('test-browser', ['lint', 'clean-tmp'], testBrowser);
 
@@ -208,4 +173,4 @@ gulp.task('test-browser', ['lint', 'clean-tmp'], testBrowser);
 gulp.task('watch', watch);
 
 // An alias of test
-gulp.task('default', ['test']);
+gulp.task('default', ['test-browser']);
